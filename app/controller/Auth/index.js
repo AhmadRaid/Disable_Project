@@ -41,3 +41,20 @@ module.exports.login = async (req, res, next) => {
   }
 };
 
+module.exports.verification_email = async (req, res, next) => {
+  try {
+    const { message, data, code } = await authController.verification_email({
+      ...req.body,
+    });
+
+    if (code === 0) {
+      return next(new Success(message, data));
+    }
+
+    return next(new BadRequest(message));
+  } catch (err) {
+    console.log(err);
+    return next(new InternalServerError(req));
+  }
+};
+

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 var validateEmail = function (email) {
   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -20,25 +21,29 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    enum: ["Supporter", "Admin", "Disable"],
+    default:"Client",
+    enum: ["Admin_Team" , "Client"],
+  },
+  address: {
+    country: {
+      type: String,
+      trim: true,
+    },
+    city: {
+      type: String,
+      trim: true,
+    },
+    address1: {
+      type: String,
+      trim: true,
+    },
+    address2: {
+      type: String,
+      trim: true,
+    },
   },
   phone: { type: String },
-  // country: { type: String },
-  location: {
-    country: [String],
-    city: [String],
-    street: [String],
-    zip_code: [String],
-  },
-  social_status: {
-    // required: function () {
-    //   return this.role == "Disabled";
-    // },
-    wifes_no: {
-      type: Number,
-    },
-    children_no: [Number],
-  },
+  
 });
 
 userSchema.methods.correctPassword = async function (
