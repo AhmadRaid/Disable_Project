@@ -13,4 +13,8 @@ router.use("/job", require("./v1/job"));
 
 router.use("/transaction", require("./v1/transaction"));
 
+router.use("/course", require("./v1/course"));
+
+router.use("/question", require("./v1/question"));
+
 module.exports = router;

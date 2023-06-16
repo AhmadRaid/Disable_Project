@@ -16,13 +16,14 @@ module.exports.getAllUser = async (data) => {
 };
 
 module.exports.addUser = async (data) => {
-  const { name, email, phone, password, role } = data;
+  const { firstName , lastName, email, phone, password, role } = data;
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = bcrypt.hashSync(password, 10);
 
     const user = await User.create({
-      name,
+      firstName,
+      lastName,
       email,
       phone,
       password: hashedPassword,

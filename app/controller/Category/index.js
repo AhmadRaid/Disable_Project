@@ -37,8 +37,8 @@ module.exports.getAllCategory = async(req, res, next) => {
   }
 };
 
-module.exports.addCategory =  () => {
-  try_catch(async (req,res,next) => {
+module.exports.addCategory =  async(req, res, next) => {
+  try {
     const { message, data, code } = await categoryController.addCategory({
       ...req.body,
     });
@@ -48,8 +48,10 @@ module.exports.addCategory =  () => {
     }
 
     return next(new BadRequest(message));
-
-})
+  } catch (err) {
+    console.log(err);
+    return next(new InternalServerError(req));
+  }
 }
 
 module.exports.editCategory = async (req, res, next) => {

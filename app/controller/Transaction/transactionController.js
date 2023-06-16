@@ -3,45 +3,18 @@ const mongoose = require("mongoose");
 
 module.exports.getAllTransactions = async (data) => {
   try {
-    const transaction = await Transaction.aggregate([
-      {
-        $lookup: {
-          from: "category",
-          localField: "title", // this in transaction db
-          foreignField: "title", // this in category db
-          as: "category_title_docs",
-        },
-      },
-      {
-        $project:{
-            _id:1,
-            title:1,
-            job_id:1
-        }
-      },
-      {
-        $group:{
-            _id:"$title",
-            numTransaction : { $sum : 1},
-          //  avgPrice : { $avg : "$price"}
-        }
-      }
-    ]);
-
-    //     {
-    //         $match: {
-    //             $or:[
-    //                 {category_id : mongoose.Types.ObjectId("63f633c854e220677e8f61f4")},
-    //              //   {category_id : mongoose.Types.ObjectId("63f648c0626b9e43709bf0c1")}
-    //             ]
-    //         },
-    //     }
-    // ])
-
-    return { code: 0, message: "commonSuccess.message", data: { transaction } };
-  } catch (error) {
-    console.log(error);
-    throw new Error(error);
+    let transaction = await Transaction.find({});
+    if (!transaction) {
+      return { code: 1, message: "We dont have transaction", data: null };
+    }
+    return {
+      code: 0,
+      message: "commonSuccess.message",
+      data: { transaction },
+    };
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
   }
 };
 

@@ -8,7 +8,7 @@ const express = require('express');
 //   addOrEditContact,
 //   contactListing,
 // } = require('../../../validationSchema/contact');
-const controller = require('../../../app/controller/transaction');
+const controller = require('../../../app/controller/Transaction');
 //const { validateRequest } = require('../../../../utils/validation');
 //const isAuthenticated = require('../../../../utils/middleware/auth/auth');
 

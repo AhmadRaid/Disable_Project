@@ -1,6 +1,6 @@
 const { User } = require("../../Model");
 const bcrypt = require("bcrypt");
-const { create_Tokens_with_cookie } = require("../../../utils/jwt");
+const { createAccessToken } = require("../../../utils/jwt");
 
 module.exports.login = async (data) => {
   const { email, password } = data;
@@ -21,7 +21,7 @@ module.exports.login = async (data) => {
       
     }
 
-    create_Tokens_with_cookie({
+   let accessToken = createAccessToken({
       id: user._id,
       role: user.role,
     });
@@ -29,7 +29,7 @@ module.exports.login = async (data) => {
     return {
       code: 0,
       message: "commonSuccess.message",
-      data: { accessToken, refreshToken },
+      data: { accessToken },
     };
   } catch (error) {
     console.log(error);
